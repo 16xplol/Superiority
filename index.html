@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>15xpLoL vs 16xpLoL // The Ultimatum</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Syne:wght@700;800&display=swap');
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #050505; }
+        h1, h2, h3 { font-family: 'Syne', sans-serif; }
+    </style>
+</head>
+<body class="text-neutral-200 min-h-screen flex flex-col justify-between tracking-tight">
+
+    <header class="border-b border-neutral-900 py-12 text-center bg-[#0a0a0a]">
+        <h1 class="text-5xl md:text-7xl font-extrabold text-white uppercase tracking-tighter mb-4">
+            The Superiority Audit
+        </h1>
+        <p class="text-neutral-500 max-w-xl mx-auto text-sm md:text-base uppercase tracking-widest">
+            A linguistic evaluation of internal group archetypes.
+        </p>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-8 w-full">
+        
+        <div class="border border-neutral-900 bg-[#0c0c0c] p-8 rounded-xl flex flex-col justify-between">
+            <div>
+                <div class="flex justify-between items-baseline mb-6">
+                    <h2 class="text-3xl font-bold text-amber-500">15xpLoL</h2>
+                    <span class="text-xs bg-amber-500/10 text-amber-500 px-3 py-1 rounded-full uppercase tracking-wider font-bold">The Primitive</span>
+                </div>
+                <div class="space-y-4 text-neutral-400 border-l-2 border-neutral-800 pl-4 my-6 italic">
+                    <p>"yo gemini what's the est free way to get a wevsite"</p>
+                    <p>"were having a virtual fight vetween the 2 in our friengroup"</p>
+                </div>
+                <p class="text-sm text-neutral-500">Characterized by a complete rejection of orthography, typographic shortcuts, and casual conversational shorthand bound to standard regional dialects.</p>
+            </div>
+            <button onclick="castVote('15xp')" class="vote-btn mt-8 w-full py-4 bg-amber-500 hover:bg-amber-400 text-black font-bold uppercase tracking-wider rounded-lg transition-all active:scale-[0.98]">
+                Vote 15xp
+            </button>
+        </div>
+
+        <div class="border border-neutral-900 bg-[#0c0c0c] p-8 rounded-xl flex flex-col justify-between">
+            <div>
+                <div class="flex justify-between items-baseline mb-6">
+                    <h2 class="text-3xl font-bold text-purple-500">16xpLoL</h2>
+                    <span class="text-xs bg-purple-500/10 text-purple-500 px-3 py-1 rounded-full uppercase tracking-wider font-bold">The Transcendent</span>
+                </div>
+                <div class="space-y-4 text-neutral-400 border-l-2 border-neutral-800 pl-4 my-6 italic">
+                    <p>"An investigation into the structural integrity of web layout patterns without fiscal barriers."</p>
+                    <p>"I exist within a separate echelon of vocabulary, completely unbound by rigid syntactical architecture."</p>
+                </div>
+                <p class="text-sm text-neutral-500">Characterized by hyper-inflated vocabulary modules, complex multi-syllabic construction, and an abstract structural delivery style.</p>
+            </div>
+            <button onclick="castVote('16xp')" class="vote-btn mt-8 w-full py-4 bg-purple-500 hover:bg-purple-400 text-black font-bold uppercase tracking-wider rounded-lg transition-all active:scale-[0.98]">
+                Vote 16xp
+            </button>
+        </div>
+
+    </main>
+
+    <section class="max-w-2xl mx-auto w-full px-6 mb-16 text-center">
+        <div class="border border-neutral-900 bg-[#080808] p-6 rounded-xl">
+            <h3 class="text-xs text-neutral-500 uppercase tracking-widest mb-4">Current Repository Tallies</h3>
+            <div class="grid grid-cols-2 gap-4 text-2xl font-bold">
+                <div class="border-r border-neutral-900">
+                    <span class="text-amber-500 block text-4xl id" id="count-15xp">-</span>
+                    <span class="text-xs text-neutral-600 uppercase tracking-wider">15xp Votes</span>
+                </div>
+                <div>
+                    <span class="text-purple-500 block text-4xl" id="count-16xp">-</span>
+                    <span class="text-xs text-neutral-600 uppercase tracking-wider">16xp Votes</span>
+                </div>
+            </div>
+            <p id="status-message" class="text-xs text-neutral-500 mt-4 italic"></p>
+        </div>
+    </section>
+
+    <footer class="border-t border-neutral-900 py-6 text-center text-xs text-neutral-600 bg-[#020202]">
+        RAW REPOSITORY METRICS // RAW CODE INTERFACE
+    </footer>
+
+    <script>
+        // --- CONFIGURATION ---
+        const GITHUB_USER = "YOUR_GITHUB_USERNAME";
+        const GITHUB_REPO = "YOUR_REPO_NAME";
+        const GITHUB_TOKEN = "YOUR_FINE_GRAINED_TOKEN"; 
+
+        // --- FETCH CURRENT VOTES FROM THE JSON FILE ---
+        async function loadVotes() {
+            try {
+                // Add a cache-buster query string to force GitHub to fetch the newest data
+                const response = await fetch(`votes.json?t=${new Date().getTime()}`);
+                const data = await response.json();
+                document.getElementById('count-15xp').innerText = data['15xp'];
+                document.getElementById('count-16xp').innerText = data['16xp'];
+            } catch (error) {
+                console.error("Error reading JSON file:", error);
+            }
+        }
+
+        // --- TRIGGER GITHUB ACTION TO CAST VOTE ---
+        async function castVote(choice) {
+            const status = document.getElementById('status-message');
+            status.innerText = "Dispatching vote payload to GitHub repo...";
+            
+            // Disable buttons during submission process
+            document.querySelectorAll('.vote-btn').forEach(btn => btn.disabled = true);
+
+            try {
+                const response = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/dispatches`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${GITHUB_TOKEN}`,
+                        'Accept': 'application/vnd.github+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        event_type: "cast-vote",
+                        client_payload: { choice: choice }
+                    })
+                });
+
+                if (response.status === 204) {
+                    status.innerText = "Vote submitted successfully! Repository processing update... (Takes ~30-40s to rebuild)";
+                    // Refresh data after a small delay to let GitHub Actions run
+                    setTimeout(loadVotes, 15000); 
+                } else {
+                    status.innerText = "GitHub API rejected dispatch. Verify Token configuration.";
+                }
+            } catch (err) {
+                status.innerText = "Network failure while casting vote.";
+                console.error(err);
+            } finally {
+                document.querySelectorAll('.vote-btn').forEach(btn => btn.disabled = false);
+            }
+        }
+
+        // Run on load
+        loadVotes();
+    </script>
+</body>
+</html>
