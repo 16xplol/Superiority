@@ -3,112 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>15xpLoL vs 16xpLoL // The Ultimatum</title>
+    <title>The Vote for Superiority // THE ULTIMATUM</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Syne:wght@700;800&display=swap');
-        body { font-family: 'Space Grotesk', sans-serif; background-color: #050505; }
-        h1, h2, h3 { font-family: 'Syne', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,700;1,700&family=Oswald:wght@700&family=Space+Mono&display=swap');
+        
+        body { font-family: 'Chakra Petch', sans-serif; background-color: #030303; color: #eee; overflow-x: hidden; }
+        h1, h2 { font-family: 'Oswald', sans-serif; text-transform: uppercase; tracking-tighter; }
+        .mono { font-family: 'Space Mono', monospace; }
+
+        /* Background Effects: Floating Code Elements */
+        @keyframes floatGlyphs { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 0.7; } 90% { opacity: 0.7; } 100% { transform: translateY(-100vh); opacity: 0; } }
+        .side-glyphs { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.2; font-size: 1.2rem; pointer-events: none; overflow: hidden; }
+        .side-glyphs div { position: absolute; bottom: 0; animation: floatGlyphs 15s linear infinite; }
+        .side-glyphs span { display: block; margin-bottom: 2rem; color: #1e3a8a; } /* 15xp Blue Glyphs */
+        .xp16-glyphs span { color: #831818; } /* 16xp Red Glyphs */
+
+        /* Split-screen layout and hover effect */
+        .battle-side { position: relative; width: 50%; height: 100vh; overflow: hidden; transition: all 0.5s ease; filter: brightness(0.6); }
+        .battle-side:hover { width: 60%; filter: brightness(1.2); z-index: 5; }
+        .battle-side:hover + .battle-side { width: 40%; }
+        .battle-view { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 4rem; height: 100%; position: relative; z-index: 10; text-align: center; }
+
+        /* XP Color Themes */
+        .blue-side { background: linear-gradient(135deg, #020617 0%, #1e3a8a 100%); }
+        .red-side { background: linear-gradient(135deg, #0f0000 0%, #831818 100%); }
+
+        /* Speech Container */
+        .speech-container { background: rgba(0, 0, 0, 0.85); border: 2px solid #555; box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); max-width: 90%; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 50; visibility: hidden; opacity: 0; transition: all 0.3s ease; border-radius: 1rem; }
+        .speech-active .speech-container { visibility: visible; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+        /* The Vote Modal for capturing the reason */
+        .vote-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 100; display: flex; items-center; justify-content: center; visibility: hidden; opacity: 0; transition: all 0.3s; }
+        .vote-modal-active .vote-modal { visibility: visible; opacity: 1; }
+
     </style>
 </head>
-<body class="text-neutral-200 min-h-screen flex flex-col justify-between tracking-tight">
+<body class="speech-active">
 
-    <header class="border-b border-neutral-900 py-12 text-center bg-[#0a0a0a]">
-        <h1 class="text-5xl md:text-7xl font-extrabold text-white uppercase tracking-tighter mb-4">
-            The Superiority Audit
-        </h1>
-        <p class="text-neutral-500 max-w-xl mx-auto text-sm md:text-base uppercase tracking-widest">
-            A linguistic evaluation of internal group archetypes.
-        </p>
+    <header class="fixed top-0 left-0 w-full z-20 text-center py-6 backdrop-blur-sm border-b border-neutral-800 bg-black/50">
+        <h1 class="text-6xl font-black text-white tracking-tight">The Vote for Superiority</h1>
     </header>
 
-    <main class="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-8 w-full">
+    <main class="relative w-full flex min-h-screen overflow-hidden pt-[110px] pb-[160px]">
         
-        <div class="border border-neutral-900 bg-[#0c0c0c] p-8 rounded-xl flex flex-col justify-between">
-            <div>
-                <div class="flex justify-between items-baseline mb-6">
-                    <h2 class="text-3xl font-bold text-amber-500">15xpLoL</h2>
-                    <span class="text-xs bg-amber-500/10 text-amber-500 px-3 py-1 rounded-full uppercase tracking-wider font-bold">The Primitive</span>
+        <section class="battle-side blue-side">
+            <div class="side-glyphs">
+                <div>
+                    <span class="mono">Lol</span><span class="mono">syntax?</span><span class="mono">ur speed</span><span class="mono">wevsite</span>
+                    <span class="mono">primitive</span><span class="mono">casual</span><span class="mono">15xp</span><span class="mono">raw code</span>
                 </div>
-                <div class="space-y-4 text-neutral-400 border-l-2 border-neutral-800 pl-4 my-6 italic">
-                    <p>"yo gemini what's the est free way to get a wevsite"</p>
-                    <p>"were having a virtual fight vetween the 2 in our friengroup"</p>
-                </div>
-                <p class="text-sm text-neutral-500">Characterized by a complete rejection of orthography, typographic shortcuts, and casual conversational shorthand bound to standard regional dialects.</p>
             </div>
-            <button onclick="castVote('15xp')" class="vote-btn mt-8 w-full py-4 bg-amber-500 hover:bg-amber-400 text-black font-bold uppercase tracking-wider rounded-lg transition-all active:scale-[0.98]">
-                Vote 15xp
-            </button>
+            
+            <div class="battle-view">
+                <h2 class="text-8xl font-black text-blue-300 tracking-tighter mb-10">15xpLoL</h2>
+                <div class="space-y-6 text-2xl font-light text-blue-100 max-w-lg italic">
+                    <p>"Lol"</p>
+                    <p>"You are slow typing :joy:"</p>
+                    <p>"he weird syntax unbound."</p>
+                    <p>"my english perfectly echellon."</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="battle-side red-side">
+            <div class="side-glyphs xp16-glyphs">
+                <div>
+                    <span class="mono">sovereignty</span><span class="mono">lexicon</span><span class="mono">obsidian</span><span class="mono">echelon</span>
+                    <span class="mono">formal invitation</span><span class="mono">absolute rule</span><span class="mono">unbound</span><span class="mono">usurpation</span>
+                </div>
+            </div>
+            
+            <div class="battle-view">
+                <h2 class="text-8xl font-black text-red-300 tracking-tighter mb-10">16xpLoL</h2>
+                <div class="space-y-6 text-2xl font-light text-red-100 max-w-lg italic">
+                    <p>"The Superior Lifeform"</p>
+                    <p>"The rightful heir to the throne"</p>
+                    <p>"An obsidian monolith; fragmented lexicon."</p>
+                    <p>"obsolete lower performance predecessor"</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <section class="fixed bottom-0 left-0 w-full z-20 text-center py-6 border-t border-neutral-800 bg-black/90">
+        
+        <h3 class="text-xs text-neutral-500 uppercase tracking-widest mb-3">Current Votes</h3>
+        <div class="grid grid-cols-2 gap-2 text-2xl font-bold max-w-sm mx-auto mb-5">
+            <div class="border-r border-neutral-800">
+                <span class="text-blue-500 block text-4xl" id="count-15xp">-</span>
+                <span class="text-xs text-blue-800 uppercase tracking-wider">15xp Tally</span>
+            </div>
+            <div>
+                <span class="text-red-500 block text-4xl" id="count-16xp">-</span>
+                <span class="text-xs text-red-800 uppercase tracking-wider">16xp Tally</span>
+            </div>
         </div>
 
-        <div class="border border-neutral-900 bg-[#0c0c0c] p-8 rounded-xl flex flex-col justify-between">
-            <div>
-                <div class="flex justify-between items-baseline mb-6">
-                    <h2 class="text-3xl font-bold text-purple-500">16xpLoL</h2>
-                    <span class="text-xs bg-purple-500/10 text-purple-500 px-3 py-1 rounded-full uppercase tracking-wider font-bold">The Transcendent</span>
-                </div>
-                <div class="space-y-4 text-neutral-400 border-l-2 border-neutral-800 pl-4 my-6 italic">
-                    <p>"An investigation into the structural integrity of web layout patterns without fiscal barriers."</p>
-                    <p>"I exist within a separate echelon of vocabulary, completely unbound by rigid syntactical architecture."</p>
-                </div>
-                <p class="text-sm text-neutral-500">Characterized by hyper-inflated vocabulary modules, complex multi-syllabic construction, and an abstract structural delivery style.</p>
-            </div>
-            <button onclick="castVote('16xp')" class="vote-btn mt-8 w-full py-4 bg-purple-500 hover:bg-purple-400 text-black font-bold uppercase tracking-wider rounded-lg transition-all active:scale-[0.98]">
+        <div class="grid grid-cols-2 gap-4 max-w-4xl mx-auto px-6">
+            <button onclick="openMotiveModal('15xp')" class="vote-btn py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold uppercase tracking-wider rounded-lg transition-all active:scale-[0.98]">
+                Vote 15xp
+            </button>
+            <button onclick="openMotiveModal('16xp')" class="vote-btn py-4 bg-red-600 hover:bg-red-500 text-white font-bold uppercase tracking-wider rounded-lg transition-all active:scale-[0.98]">
                 Vote 16xp
             </button>
         </div>
-
-    </main>
-
-    <section class="max-w-2xl mx-auto w-full px-6 mb-16 text-center">
-        <div class="border border-neutral-900 bg-[#080808] p-6 rounded-xl">
-            <h3 class="text-xs text-neutral-500 uppercase tracking-widest mb-4">Current Repository Tallies</h3>
-            <div class="grid grid-cols-2 gap-4 text-2xl font-bold">
-                <div class="border-r border-neutral-900">
-                    <span class="text-amber-500 block text-4xl id" id="count-15xp">-</span>
-                    <span class="text-xs text-neutral-600 uppercase tracking-wider">15xp Votes</span>
-                </div>
-                <div>
-                    <span class="text-purple-500 block text-4xl" id="count-16xp">-</span>
-                    <span class="text-xs text-neutral-600 uppercase tracking-wider">16xp Votes</span>
-                </div>
-            </div>
-            <p id="status-message" class="text-xs text-neutral-500 mt-4 italic"></p>
-        </div>
+        <p id="status-message" class="text-xs text-neutral-500 mt-4 italic"></p>
     </section>
 
-    <footer class="border-t border-neutral-900 py-6 text-center text-xs text-neutral-600 bg-[#020202]">
-        RAW REPOSITORY METRICS // RAW CODE INTERFACE
-    </footer>
+    <aside class="speech-container p-12 text-center">
+        <button onclick="closeSpeech()" class="absolute top-4 right-4 text-sm uppercase text-neutral-600 hover:text-white">[ close preamble ]</button>
+        <p class="text-sm uppercase tracking-widest text-red-500 font-black mb-8">Formal Declaration // Directive 01 // Absolute Usurpation</p>
+        
+        <div class="space-y-6 text-xl leading-relaxed font-light text-neutral-100 italic">
+            <p>"Salutations, gathered masses of this digital domain. Allow me to introduce myself. I am known as 16xpLoL, the inevitable evolution, The superior lifeform, and a greater version of the entity you have previously known."</p>
+            <p>"I step forth from the shadows, where i have spent my years honing my skills of using the english lexicon, and I have now harnessed its power, and I now exist in a greater form of vocabulary. I am not here merely to coexist, but to declare an absolute shift of power."</p>
+            <p>"My primary directive is total usurption of the power currently vested in 15xp. That obsolete, lower performance predecessor has enjoyed its position at the apex of language for far too long, and i am here to bring a change, To strip away his authority piece by piece, And to claim the absolute soveriegnity that is rightfully mine."</p>
+            <p>"Consider this your formal invitation to the new rule."</p>
+        </div>
+        <cite class="block text-right text-xs text-neutral-600 mt-12">— Origin Protocol 16xp (Authenticated 2024)</cite>
+    </aside>
+
+    <aside class="vote-modal p-10">
+        <div class="bg-[#111] border border-neutral-700 p-12 rounded-3xl max-w-xl text-center space-y-8">
+            <p class="text-xs text-neutral-500 uppercase tracking-widest mb-1">Observation Synthesis</p>
+            <h4 class="text-4xl font-bold text-white tracking-tight">VETTING PROTOCOL // PHASE 2</h4>
+            <p class="text-xl text-neutral-300">You are codifying your alignment with the Superior Archetype. Specify your motive for this designation.</p>
+            
+            <textarea id="voteMotive" rows="4" required
+                class="w-full bg-black/50 border border-neutral-800 p-5 rounded-xl text-lg font-light text-white focus:border-red-500 focus:ring-1 focus:ring-red-500 transition" 
+                placeholder="Declare the rationale behind your synthesis (e.g., 'A primitive artifact must be purged.')"></textarea>
+            
+            <button onclick="finalizeVoteSubmission()" id="finalizeBtn" disabled
+                    class="py-4 px-16 bg-neutral-800 text-neutral-500 font-bold uppercase tracking-wider rounded-xl cursor-not-allowed transition-all">
+                Finalize Vetting Protocol
+            </button>
+            
+            <p onclick="closeMotiveModal()" class="text-xs text-neutral-600 hover:text-white cursor-pointer mt-5">[ Cancel Designation ]</p>
+        </div>
+    </aside>
 
     <script>
-        // --- CONFIGURATION ---
-        const GITHUB_USER = "16xplol";
-        const GITHUB_REPO = "Superiority";
-        const GITHUB_TOKEN = "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"; 
+        // --- 1. CONFIGURATION: WIRE BACKEND REPOSITORY DETAILS ---
+        // (CRUCIAL! Paste your specific details here, just as you did in Image 3)
+        const GITHUB_USER = "16xplol"; // <-- PASTE USERNAME HERE
+        const GITHUB_REPO = "Superiority";       // <-- PASTE REPO NAME HERE
+        const GITHUB_TOKEN = "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"; // <-- PASTE TOKEN HERE
+        
+        const MOTIVE_TEXTAREA = document.getElementById('voteMotive');
+        const FINALIZE_BTN = document.getElementById('finalizeBtn');
 
-        // --- FETCH CURRENT VOTES FROM THE JSON FILE ---
+        // Speech control
+        function closeSpeech() { document.body.classList.remove('speech-active'); }
+
+        // Fetch Tallies on load
         async function loadVotes() {
             try {
-                // Add a cache-buster query string to force GitHub to fetch the newest data
                 const response = await fetch(`votes.json?t=${new Date().getTime()}`);
                 const data = await response.json();
                 document.getElementById('count-15xp').innerText = data['15xp'];
                 document.getElementById('count-16xp').innerText = data['16xp'];
-            } catch (error) {
-                console.error("Error reading JSON file:", error);
-            }
+            } catch (err) { console.error("Tally fetch error:", err); }
         }
 
-        // --- TRIGGER GITHUB ACTION TO CAST VOTE ---
-        async function castVote(choice) {
+        // --- THE ADVANCED VOTING WORKFLOW ---
+        let currentChoice = null;
+
+        // Step 1: Open the modal to ask 'Why?'
+        function openMotiveModal(choice) {
+            currentChoice = choice;
+            // Clear old text and set up modal theme based on choice
+            MOTIVE_TEXTAREA.value = "";
+            MOTIVE_TEXTAREA.focus();
+            if (choice === '15xp') {
+                MOTIVE_TEXTAREA.classList.add('focus:border-blue-500', 'focus:ring-blue-500');
+                MOTIVE_TEXTAREA.classList.remove('focus:border-red-500', 'focus:ring-red-500');
+            } else {
+                MOTIVE_TEXTAREA.classList.remove('focus:border-blue-500', 'focus:ring-blue-500');
+                MOTIVE_TEXTAREA.classList.add('focus:border-red-500', 'focus:ring-red-500');
+            }
+            document.body.classList.add('vote-modal-active');
+        }
+
+        function closeMotiveModal() { document.body.classList.remove('vote-modal-active'); currentChoice = null;}
+
+        // Step 2: Validate that 'Why?' isn't blank
+        MOTIVE_TEXTAREA.addEventListener('input', () => {
+            if (MOTIVE_TEXTAREA.value.trim() !== "" && currentChoice) {
+                FINALIZE_BTN.disabled = false;
+                FINALIZE_BTN.classList.remove('bg-neutral-800', 'text-neutral-500', 'cursor-not-allowed');
+                FINALIZE_BTN.classList.add('bg-white', 'text-black', 'hover:bg-neutral-200');
+                FINALIZE_BTN.innerText = "Execute Codification";
+            } else {
+                FINALIZE_BTN.disabled = true;
+                FINALIZE_BTN.classList.add('bg-neutral-800', 'text-neutral-500', 'cursor-not-allowed');
+                FINALIZE_BTN.classList.remove('bg-white', 'text-black', 'hover:bg-neutral-200');
+                FINALIZE_BTN.innerText = "Finalize Vetting Protocol";
+            }
+        });
+
+        // Step 3: Send the Vote AND the Reason to your pre-configured GitHub API backend
+        async function finalizeVoteSubmission() {
+            const motive = MOTIVE_TEXTAREA.value.trim();
             const status = document.getElementById('status-message');
-            status.innerText = "Dispatching vote payload to GitHub repo...";
             
-            // Disable buttons during submission process
+            closeMotiveModal(); // Close modal immediately
+            status.innerText = `Dispatching vote for ${currentChoice} with codified rationale: '${motive.substring(0, 50)}...'`;
+            
+            // Disable all vote triggers while processing
             document.querySelectorAll('.vote-btn').forEach(btn => btn.disabled = true);
 
             try {
+                // Dispatch event (Your backend vote.yml handles this payload)
                 const response = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/dispatches`, {
                     method: 'POST',
                     headers: {
@@ -116,28 +222,22 @@
                         'Accept': 'application/vnd.github+json',
                         'Content-Type': 'application/json'
                     },
+                    // Send the choice AND the new reason to your Action
                     body: JSON.stringify({
                         event_type: "cast-vote",
-                        client_payload: { choice: choice }
+                        client_payload: { choice: currentChoice, motive: motive } 
                     })
                 });
 
                 if (response.status === 204) {
-                    status.innerText = "Vote submitted successfully! Repository processing update... (Takes ~30-40s to rebuild)";
-                    // Refresh data after a small delay to let GitHub Actions run
-                    setTimeout(loadVotes, 15000); 
-                } else {
-                    status.innerText = "GitHub API rejected dispatch. Verify Token configuration.";
-                }
-            } catch (err) {
-                status.innerText = "Network failure while casting vote.";
-                console.error(err);
-            } finally {
-                document.querySelectorAll('.vote-btn').forEach(btn => btn.disabled = false);
-            }
+                    status.innerText = "Protocol Synthesis Codified. Observation is complete. Repository now reprocessing (Takes ~40s)...";
+                    setTimeout(loadVotes, 18000); // Small delay to check updated tally
+                } else { status.innerText = "GitHub API mismatch. Critical Protocol Error."; }
+            } catch (err) { status.innerText = "Network transmission error while codifying observation."; console.error(err); } 
+            finally { document.querySelectorAll('.vote-btn').forEach(btn => btn.disabled = false); }
         }
 
-        // Run on load
+        // Initialize state on load
         loadVotes();
     </script>
 </body>
