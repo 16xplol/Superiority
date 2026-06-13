@@ -1,0 +1,36 @@
+name: Log Vote
+on:
+  repository_dispatch:
+    types: [cast-vote]
+
+jobs:
+  update-votes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo Code
+        uses: actions/checkout@v4
+
+      - name: Update Vote Count
+        run: |
+          CHOICE="${{ github.event.client_payload.choice }}"
+          echo "Vote received for: $CHOICE"
+          
+          # Use node to quickly update the JSON file safely
+          node -e "
+            const fs = require('fs');
+            const data = JSON.parse(fs.readFileSync('votes.json', 'utf8'));
+            if (data['$CHOICE'] !== undefined) {
+              data['$CHOICE'] += 1;
+              fs.writeFileSync('votes.json', JSON.stringify(data, null, 2));
+            } else {
+              process.exit(1);
+            }
+          "
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "VoterBot"
+          git config --global user.email "voterbot@github.com"
+          git add votes.json
+          git commit -m "Vote logged for ${{ github.event.client_payload.choice }} [skip ci]"
+          git push
